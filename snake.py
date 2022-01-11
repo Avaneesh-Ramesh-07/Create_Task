@@ -92,7 +92,7 @@ food.speed(0)
 food.shape(shapes)
 food.color(colors)
 food.penup()
-food.goto(0, 100)
+food.goto(0, 78)
 
 
 
