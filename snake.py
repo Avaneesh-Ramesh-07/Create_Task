@@ -84,6 +84,17 @@ for i in range(4):
   t.right(90)
 go_to(0,0)
 
+#creating food
+food = t.Turtle()
+colors = 'red'
+shapes = 'circle'
+food.speed(0)
+food.shape(shapes)
+food.color(colors)
+food.penup()
+food.goto(0, 100)
+
+
 
 #event listeners
 t.listen()
@@ -92,12 +103,12 @@ t.onkey(down, "Down") #call "down" function if down arrow key is pressed
 t.onkey(left, "Left") #call "left" function if left arrow key is pressed
 t.onkey(right, "Right") #call "right" function if right arrow key is pressed
 
+
 while True:
   #while loop that will run facilitating the main snake game
   t.update()
   move()
 t.mainloop() #keeps window open
-
 
 
 """
