@@ -40,7 +40,7 @@ def check_loss(x, y):
   #function to check if the user lost
   if x > (221) or x <-221 or  y > (221) or  y < -221:
       return -1
-def move():
+def move(turtle_dict):
   #moves the turtle based on its current heading
   t.speed(0.5)
   t.penup()
@@ -69,27 +69,45 @@ def move():
         t.setx(t.xcor()-26)
         time.sleep(0.1)
 def update_food(status_dict):
-  needs_replenish=True
-  for key in status_dict:
-    if status_dict[key]==True:
-      needs_replenish=False
-  if needs_replenish==True:
-    possible_pos=[]
-    for i in range(10):
-      possible_pos.append(((26*random.randint(-8,8)), 26*random.randint(-8,8)))
-    possible_pos=list(set(possible_pos)) #removes duplicates
-    print(possible_pos)
-    for i in range(3):
-        food = t.Turtle()
-        colors = 'red'
-        shapes = 'circle'
-        food.shape(shapes)
-        food.color(colors)
-        food.speed(0)
-        food.penup()
-        random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
-        food.goto(random_pos[0], random_pos[1])
-        possible_pos.remove(random_pos) 
+  """needs_replenish=True
+  if status_dict is not None:
+    for key in status_dict:
+      if status_dict[key]==True:
+        print("here")
+        needs_replenish=False
+  if needs_replenish==True:"""
+  possible_pos=[]
+  for i in range(10):
+    possible_pos.append(((26*random.randint(-8,8)), 26*random.randint(-8,8)))
+  possible_pos=list(set(possible_pos)) #removes duplicates
+  print(possible_pos)
+  status_dict={}
+  for i in range(3):
+      food = t.Turtle()
+      colors = 'red'
+      shapes = 'circle'
+      food.shape(shapes)
+      food.color(colors)
+      food.speed(1000)
+      food.penup()
+      random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
+      food.goto(random_pos[0], random_pos[1])
+      possible_pos.remove(random_pos)
+      status_dict[food]=True
+  return status_dict
+
+
+#creates multiple turtles from the apples
+def add_new_turtle(turtle_dict):
+  created_turtle=t.Turtle()
+  created_turtle.penup()
+  created_turtle.shape('square')
+  created_turtle.turtlesize(1.3)
+  created_turtle.goto(turtle_dict[t])
+  turtle_dict[created_turtle]=created_turtle.pos()
+
+
+    
 
 
 
@@ -112,7 +130,7 @@ for i in range(4):
   t.right(90)
 go_to(0,0)
 
-#creating an apple using another turtle
+
 
 
 
@@ -124,47 +142,25 @@ t.onkey(down, "Down") #call "down" function if down arrow key is pressed
 t.onkey(left, "Left") #call "left" function if left arrow key is pressed
 t.onkey(right, "Right") #call "right" function if right arrow key is pressed
 
-
+status_dict={}
+status_dict=update_food(status_dict)
+turtle_dict={t:(0,0)}
 while True:
-  #while loop that will run facilitating the main snake game
+
+  #while loop that will run facilitating the main snake game and confirms that there are three apples on the board at all times
   t.update()
-  update_food({})
+  if True not in status_dict.values():
+    status_dict=update_food(status_dict)
+  for i in status_dict:
+    if t.pos() == i.pos():
+      status_dict[i]=False
+      i.ht()
+      add_new_turtle(turtle_dict)
+   
+
+  
+  
+  turtle_dict[t]=t.pos()
   move()
 t.mainloop() #keeps window open
-
-
-"""
-#setting up board
-
-while True:
-    if keyboard.read_key()=='w' and t.heading() != 180:
-        if check_loss()==-1:
-            print("you lost")
-        y+=26
-
-        go_to(x,y)
-        time.sleep(0.25)
-    elif keyboard.read_key()=='a' and t.heading() != 270:
-        if check_loss()==-1:
-            print("you lost")
-        x-=26
-
-        go_to(x,y)
-        time.sleep(0.25)
-    elif keyboard.read_key()=='s' and t.heading() != 0:
-        if check_loss()==-1:
-            print("you lost")
-        y-=26
-
-        go_to(x,y)
-        time.sleep(0.25)
-    elif keyboard.read_key()=='d' and t.heading() != 90:
-        if check_loss()==-1:
-            print("you lost")
-        x+=26
-
-        go_to(x,y)
-        time.sleep(0.25)
-    print(t.heading())"""
-
 
