@@ -1,5 +1,7 @@
+#importing packages
 import turtle as t
 import time
+import random
 
 #initialize window
 window=t.Screen()
@@ -66,11 +68,37 @@ def move():
     else:
         t.setx(t.xcor()-26)
         time.sleep(0.1)
+def update_food(status_dict):
+  needs_replenish=True
+  for key in status_dict:
+    if status_dict[key]==True:
+      needs_replenish=False
+  if needs_replenish==True:
+    possible_pos=[]
+    for i in range(10):
+      possible_pos.append(((26*random.randint(-8,8)), 26*random.randint(-8,8)))
+    possible_pos=list(set(possible_pos)) #removes duplicates
+    print(possible_pos)
+    for i in range(3):
+        food = t.Turtle()
+        colors = 'red'
+        shapes = 'circle'
+        food.shape(shapes)
+        food.color(colors)
+        food.speed(0)
+        food.penup()
+        random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
+        food.goto(random_pos[0], random_pos[1])
+        possible_pos.remove(random_pos) 
 
 
-#makes a grid for the board
 
-t.speed(1000)
+
+
+
+#makes a 442x442 grid for the board
+
+t.speed(1000000000)
 t.turtlesize(1.3)
 go_to(-(442/2), -(441/2))
 t.lt(90)
@@ -84,15 +112,8 @@ for i in range(4):
   t.right(90)
 go_to(0,0)
 
-#creating food
-food = t.Turtle()
-colors = 'red'
-shapes = 'circle'
-food.speed(0)
-food.shape(shapes)
-food.color(colors)
-food.penup()
-food.goto(0, 78)
+#creating an apple using another turtle
+
 
 
 
@@ -107,6 +128,7 @@ t.onkey(right, "Right") #call "right" function if right arrow key is pressed
 while True:
   #while loop that will run facilitating the main snake game
   t.update()
+  update_food({})
   move()
 t.mainloop() #keeps window open
 
