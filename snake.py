@@ -40,7 +40,7 @@ def check_loss(x, y):
   #function to check if the user lost
   if x > (221) or x <-221 or  y > (221) or  y < -221:
       return -1
-def move(turtle_dict):
+def move():
   #moves the turtle based on its current heading
   t.speed(0.5)
   t.penup()
@@ -78,7 +78,9 @@ def update_food(status_dict):
   if needs_replenish==True:"""
   possible_pos=[]
   for i in range(10):
-    possible_pos.append(((26*random.randint(-8,8)), 26*random.randint(-8,8)))
+    pos=((26*random.randint(-8,8)), 26*random.randint(-8,8))
+    
+    possible_pos.append(pos)
   possible_pos=list(set(possible_pos)) #removes duplicates
   print(possible_pos)
   status_dict={}
@@ -105,6 +107,7 @@ def add_new_turtle(turtle_dict):
   created_turtle.turtlesize(1.3)
   created_turtle.goto(turtle_dict[t])
   turtle_dict[created_turtle]=created_turtle.pos()
+  return turtle_dict
 
 
     
@@ -155,8 +158,11 @@ while True:
     if t.pos() == i.pos():
       status_dict[i]=False
       i.ht()
-      add_new_turtle(turtle_dict)
-   
+      turtle_dict=add_new_turtle(turtle_dict)
+  print(turtle_dict)
+  for i in range(1, len(turtle_dict)-1):
+    list(turtle_dict.keys())[i].goto(list(turtle_dict.values())[i-1])
+
 
   
   
