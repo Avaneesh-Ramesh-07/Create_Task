@@ -8,6 +8,8 @@ window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 window.bgcolor("lightgreen")
 t.shape("square")
+window.colormode(255)
+
 
 #defining movement functions
 def up():
@@ -41,6 +43,7 @@ def check_loss(x, y):
   if x > (221) or x <-221 or  y > (221) or  y < -221:
       return -1
 def move():
+  delay=0.06
   #moves the turtle based on its current heading
   t.speed(0.5)
   t.penup()
@@ -49,25 +52,25 @@ def move():
         t.setpos(0,0)
     else:
         t.sety(t.ycor()+26)
-        time.sleep(0.1)
+        time.sleep(delay)
   if t.heading()==270:
     if check_loss(t.xcor(), t.ycor()-26)==-1:
         t.setpos(0,0)
     else:
         t.sety(t.ycor()-26)
-        time.sleep(0.1)
+        time.sleep(delay)
   if t.heading()==0:
     if check_loss(t.xcor()+26, t.ycor())==-1:
         t.setpos(0,0)
     else:
         t.setx(t.xcor()+26)
-        time.sleep(0.1)
+        time.sleep(delay)
   if t.heading()==180:
     if check_loss(t.xcor()-26, t.ycor())==-1:
         t.setpos(0,0)
     else:
         t.setx(t.xcor()-26)
-        time.sleep(0.1)
+        time.sleep(delay)
 def update_food(status_dict):
   """needs_replenish=True
   if status_dict is not None:
@@ -86,6 +89,7 @@ def update_food(status_dict):
   status_dict={}
   for i in range(3):
       food = t.Turtle()
+      food.ht()
       colors = 'red'
       shapes = 'circle'
       food.shape(shapes)
@@ -94,15 +98,19 @@ def update_food(status_dict):
       food.penup()
       random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
       food.goto(random_pos[0], random_pos[1])
+      food.st()
       possible_pos.remove(random_pos)
       status_dict[food]=True
   return status_dict
 
-
 #creates multiple turtles from the apples
-def add_new_turtle(turtle_dict):
+def add_new_turtle(turtle_dict, r, g, b):
+  print(r)
+  print(g)
+  print(b)
   created_turtle=t.Turtle()
-  created_turtle.color('red')
+  created_turtle.color(r, g, b)
+  created_turtle.speed(10000)
   created_turtle.penup()
   created_turtle.shape('square')
   created_turtle.turtlesize(1.3)
@@ -111,14 +119,6 @@ def add_new_turtle(turtle_dict):
   created_turtle.goto(turtle_dict[t])
   turtle_dict[created_turtle]=created_turtle.pos()
   return turtle_dict
-
-
-    
-
-
-
-
-
 
 #makes a 442x442 grid for the board
 
@@ -161,22 +161,26 @@ while True:
     if t.pos() == i.pos():
       status_dict[i]=False
       i.ht()
-      turtle_dict=add_new_turtle(turtle_dict)
+      
+      """r+=2*(random.randint(1,3))
+      g+=2*(random.randint(1,3))
+      b+=2*(random.randint(1,3))
+      if r > 255:
+        r=2
+      if g > 255:
+        g=2
+      if b > 255:
+        b=2"""
+      r=random.randint(20,255)
+      g=random.randint(20,255)
+      b=random.randint(20,255)
+      turtle_dict=add_new_turtle(turtle_dict, r, g, b)
   for turtle in turtle_dict:
     turtle_dict[turtle]=turtle.pos()
-  move()
   keys=list(turtle_dict.keys())
   for i in range(1, len(keys)):
-    #print(turtle_dict[keys[1]])
     if i != len(keys):
       keys[i].goto(turtle_dict[keys[i-1]])
-  """for i in range(0, len(turtle_dict)-1):
-    list(turtle_dict.keys())[i].goto(list(turtle_dict.values())[i-1])"""
-
-
-
   
-  
-  
+  move()
 t.mainloop() #keeps window open
-
