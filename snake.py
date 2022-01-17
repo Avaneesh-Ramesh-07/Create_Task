@@ -102,9 +102,12 @@ def update_food(status_dict):
 #creates multiple turtles from the apples
 def add_new_turtle(turtle_dict):
   created_turtle=t.Turtle()
+  created_turtle.color('red')
   created_turtle.penup()
   created_turtle.shape('square')
   created_turtle.turtlesize(1.3)
+  keys=list(turtle_dict.keys())
+  #print(turtle_dict)
   created_turtle.goto(turtle_dict[t])
   turtle_dict[created_turtle]=created_turtle.pos()
   return turtle_dict
@@ -159,14 +162,21 @@ while True:
       status_dict[i]=False
       i.ht()
       turtle_dict=add_new_turtle(turtle_dict)
-  print(turtle_dict)
-  for i in range(1, len(turtle_dict)-1):
-    list(turtle_dict.keys())[i].goto(list(turtle_dict.values())[i-1])
-
-
-  
-  
-  turtle_dict[t]=t.pos()
+  for turtle in turtle_dict:
+    turtle_dict[turtle]=turtle.pos()
   move()
+  keys=list(turtle_dict.keys())
+  for i in range(1, len(keys)):
+    #print(turtle_dict[keys[1]])
+    if i != len(keys):
+      keys[i].goto(turtle_dict[keys[i-1]])
+  """for i in range(0, len(turtle_dict)-1):
+    list(turtle_dict.keys())[i].goto(list(turtle_dict.values())[i-1])"""
+
+
+
+  
+  
+  
 t.mainloop() #keeps window open
 
