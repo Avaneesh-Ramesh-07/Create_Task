@@ -7,8 +7,10 @@ import random
 window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 window.bgcolor("lightgreen")
-t.shape("square")
+t.shape("circle")
 window.colormode(255)
+
+delay=0.1
 
 
 #defining movement functions
@@ -38,54 +40,64 @@ def go_to(x,y):
   t.goto(x,y)
   t.pendown()
 
-def check_loss(x, y):
+def check_loss(x, y, turtle_dict):
   #function to check if the user lost
   if x > (221) or x <-221 or  y > (221) or  y < -221:
       return -1
-def move():
-  delay=0.06
+  if (x,y) in turtle_dict.values():
+    return -1
+def game_finished():
+  t.clearscreen()
+  window.bgcolor("lightgreen")
+  t.ht()
+  t.pu()
+  #t.goto(-20, 0)
+  t.write("Thanks for playing! :)\nHope you had lots of fun playing our game!\nRerun the program to play again!", font=("Helvetica", 15, "normal") ,align="center")
+  time.sleep(7.5)
+  exit()
+def move(delay, turtle_dict):
   #moves the turtle based on its current heading
   t.speed(0.5)
   t.penup()
   if t.heading()==90:
-    if check_loss(t.xcor(), t.ycor()+26)==-1:
-        t.setpos(0,0)
+    if check_loss(t.xcor(), t.ycor()+26, turtle_dict)==-1:
+        #t.setpos(0,0)
+        game_finished()
     else:
         t.sety(t.ycor()+26)
         time.sleep(delay)
   if t.heading()==270:
-    if check_loss(t.xcor(), t.ycor()-26)==-1:
-        t.setpos(0,0)
+    if check_loss(t.xcor(), t.ycor()-26, turtle_dict)==-1:
+        #t.setpos(0,0)
+        game_finished()
     else:
         t.sety(t.ycor()-26)
         time.sleep(delay)
   if t.heading()==0:
-    if check_loss(t.xcor()+26, t.ycor())==-1:
-        t.setpos(0,0)
+    if check_loss(t.xcor()+26, t.ycor(), turtle_dict)==-1:
+        #t.setpos(0,0)
+        game_finished()
     else:
         t.setx(t.xcor()+26)
         time.sleep(delay)
   if t.heading()==180:
-    if check_loss(t.xcor()-26, t.ycor())==-1:
-        t.setpos(0,0)
+    if check_loss(t.xcor()-26, t.ycor(), turtle_dict)==-1:
+        #t.setpos(0,0)
+        game_finished()
     else:
         t.setx(t.xcor()-26)
         time.sleep(delay)
-def update_food(status_dict):
-  """needs_replenish=True
-  if status_dict is not None:
-    for key in status_dict:
-      if status_dict[key]==True:
-        print("here")
-        needs_replenish=False
-  if needs_replenish==True:"""
+def update_food(status_dict, turtle_dict):
   possible_pos=[]
   for i in range(10):
     pos=((26*random.randint(-8,8)), 26*random.randint(-8,8))
     
     possible_pos.append(pos)
   possible_pos=list(set(possible_pos)) #removes duplicates
-  print(possible_pos)
+  for position in possible_pos:
+    if position in turtle_dict.values():
+
+      possible_pos.remove(position)
   status_dict={}
   for i in range(3):
       food = t.Turtle()
@@ -104,21 +116,21 @@ def update_food(status_dict):
   return status_dict
 
 #creates multiple turtles from the apples
-def add_new_turtle(turtle_dict, r, g, b):
-  print(r)
-  print(g)
-  print(b)
+def add_new_turtle(turtle_dict, r, g, b, delay):
+  if delay-0.01>0:
+    delay-=0.01
+  else:
+    delay=0
   created_turtle=t.Turtle()
   created_turtle.color(r, g, b)
   created_turtle.speed(10000)
   created_turtle.penup()
-  created_turtle.shape('square')
+  created_turtle.shape('circle')
   created_turtle.turtlesize(1.3)
   keys=list(turtle_dict.keys())
-  #print(turtle_dict)
   created_turtle.goto(turtle_dict[t])
   turtle_dict[created_turtle]=created_turtle.pos()
-  return turtle_dict
+  return turtle_dict, delay
 
 #makes a 442x442 grid for the board
 
@@ -149,32 +161,37 @@ t.onkey(left, "Left") #call "left" function if left arrow key is pressed
 t.onkey(right, "Right") #call "right" function if right arrow key is pressed
 
 status_dict={}
-status_dict=update_food(status_dict)
+
 turtle_dict={t:(0,0)}
+status_dict=update_food(status_dict, turtle_dict)
+r=0
+b=20
+g=0
 while True:
 
   #while loop that will run facilitating the main snake game and confirms that there are three apples on the board at all times
   t.update()
   if True not in status_dict.values():
-    status_dict=update_food(status_dict)
+    status_dict=update_food(status_dict, turtle_dict)
   for i in status_dict:
     if t.pos() == i.pos():
       status_dict[i]=False
       i.ht()
       
-      """r+=2*(random.randint(1,3))
-      g+=2*(random.randint(1,3))
-      b+=2*(random.randint(1,3))
-      if r > 255:
-        r=2
-      if g > 255:
-        g=2
+      r+=10
+      g+=10
+      b+=10
       if b > 255:
-        b=2"""
-      r=random.randint(20,255)
-      g=random.randint(20,255)
-      b=random.randint(20,255)
-      turtle_dict=add_new_turtle(turtle_dict, r, g, b)
+        b=0
+        r=20
+        g=0
+      if r > 255:
+        b=20
+        r=0
+        g=0
+      output_list=add_new_turtle(turtle_dict, r, g, b, delay)
+      turtle_dict=output_list[0]
+      delay=output_list[1]
   for turtle in turtle_dict:
     turtle_dict[turtle]=turtle.pos()
   keys=list(turtle_dict.keys())
@@ -182,5 +199,5 @@ while True:
     if i != len(keys):
       keys[i].goto(turtle_dict[keys[i-1]])
   
-  move()
+  move(delay, turtle_dict)
 t.mainloop() #keeps window open
