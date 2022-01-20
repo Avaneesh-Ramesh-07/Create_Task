@@ -10,28 +10,29 @@ window.bgcolor("lightgreen")
 t.shape("circle")
 window.colormode(255)
 
-delay=0.1
+delay=0.15
 
 
 #defining movement functions
 def up():
   #faces turtle up
-  if t.heading()!="down":
-      t.seth(90)
+  print(t.heading())
+  if t.heading()!=270:
+    t.seth(90)
 
 def down():
   #faces turtle down
-  if t.heading() != "up":
+  if t.heading() != 90:
       t.seth(270)
 
 def left():
   #faces turtle left
-  if t.heading() != "right":
+  if t.heading() != 0:
       t.seth(180)
 
 def right():
   #faces turtle right
-  if t.heading()!="left":
+  if t.heading()!=180:
       t.seth(0)
 #defining other functions
 def go_to(x,y):
@@ -88,32 +89,38 @@ def move(delay, turtle_dict):
         t.setx(t.xcor()-26)
         time.sleep(delay)
 def update_food(status_dict, turtle_dict):
-  possible_pos=[]
-  for i in range(10):
-    pos=((26*random.randint(-8,8)), 26*random.randint(-8,8))
-    
-    possible_pos.append(pos)
-  possible_pos=list(set(possible_pos)) #removes duplicates
-  for position in possible_pos:
-    if position in turtle_dict.values():
+  if True not in status_dict.values():
+    possible_pos=[]
+    for i in range(10):
+      pos=((26*random.randint(-8,8)), 26*random.randint(-8,8))
+      
+      possible_pos.append(pos)
+    possible_pos=list(set(possible_pos)) #removes duplicates
+    for position in possible_pos:
+      if position in turtle_dict.values():
 
-      possible_pos.remove(position)
-  status_dict={}
-  for i in range(3):
-      food = t.Turtle()
-      food.ht()
-      colors = 'red'
-      shapes = 'circle'
-      food.shape(shapes)
-      food.color(colors)
-      food.speed(1000)
-      food.penup()
-      random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
-      food.goto(random_pos[0], random_pos[1])
-      food.st()
-      possible_pos.remove(random_pos)
-      status_dict[food]=True
-  return status_dict
+        possible_pos.remove(position)
+    status_dict={}
+    for i in range(3):
+        food = t.Turtle()
+        food.ht()
+        colors = 'red'
+        shapes = 'circle'
+        food.shape(shapes)
+        food.color(colors)
+        food.speed(1000)
+        food.penup()
+        random_pos=possible_pos[random.randint(0, len(possible_pos)-1)]
+        food.goto(random_pos[0], random_pos[1])
+        food.st()
+        possible_pos.remove(random_pos)
+        status_dict[food]=True
+        updated_dict=status_dict
+    return updated_dict
+  else:
+
+    return status_dict #return the same version of the dictionary
+
 
 #creates multiple turtles from the apples
 def add_new_turtle(turtle_dict, r, g, b, delay):
@@ -171,8 +178,7 @@ while True:
 
   #while loop that will run facilitating the main snake game and confirms that there are three apples on the board at all times
   t.update()
-  if True not in status_dict.values():
-    status_dict=update_food(status_dict, turtle_dict)
+  status_dict=update_food(status_dict, turtle_dict)
   for i in status_dict:
     if t.pos() == i.pos():
       status_dict[i]=False
