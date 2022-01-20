@@ -8,15 +8,15 @@ window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 window.bgcolor("lightgreen")
 t.shape("circle")
+
 window.colormode(255)
 
 delay=0.15
 
 
-#defining movement functions
+#defining functions 
 def up():
   #faces turtle up
-  print(t.heading())
   if t.heading()!=270:
     t.seth(90)
 
@@ -47,12 +47,11 @@ def check_loss(x, y, turtle_dict):
       return -1
   if (x,y) in turtle_dict.values():
     return -1
-def game_finished():
+def game_finished(): #function to execute when the player loses the game
   t.clearscreen()
   window.bgcolor("lightgreen")
   t.ht()
   t.pu()
-  #t.goto(-20, 0)
   t.write("Thanks for playing! :)\nHope you had lots of fun playing our game!\nRerun the program to play again!", font=("Helvetica", 15, "normal") ,align="center")
   time.sleep(7.5)
   exit()
@@ -62,33 +61,30 @@ def move(delay, turtle_dict):
   t.penup()
   if t.heading()==90:
     if check_loss(t.xcor(), t.ycor()+26, turtle_dict)==-1:
-        #t.setpos(0,0)
         game_finished()
     else:
         t.sety(t.ycor()+26)
         time.sleep(delay)
   if t.heading()==270:
     if check_loss(t.xcor(), t.ycor()-26, turtle_dict)==-1:
-        #t.setpos(0,0)
         game_finished()
     else:
         t.sety(t.ycor()-26)
         time.sleep(delay)
   if t.heading()==0:
     if check_loss(t.xcor()+26, t.ycor(), turtle_dict)==-1:
-        #t.setpos(0,0)
         game_finished()
     else:
         t.setx(t.xcor()+26)
         time.sleep(delay)
   if t.heading()==180:
     if check_loss(t.xcor()-26, t.ycor(), turtle_dict)==-1:
-        #t.setpos(0,0)
         game_finished()
     else:
         t.setx(t.xcor()-26)
         time.sleep(delay)
-def update_food(status_dict, turtle_dict):
+
+def update_food(status_dict, turtle_dict): #student defined function to update the food
   if True not in status_dict.values():
     possible_pos=[]
     for i in range(10):
