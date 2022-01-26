@@ -1,3 +1,5 @@
+"""This is the code for Avaneesh R. and Anvay T.'s Create Task. We have created the Snake Game"""
+
 #importing packages
 import turtle as t
 import time
@@ -112,7 +114,7 @@ def update_food(status_dict, turtle_dict): #student defined function to update t
         possible_pos.remove(random_pos)
         status_dict[food]=True
         updated_dict=status_dict
-    return updated_dict
+    return updated_dict #returns the updated version of the dictionary that has all the newly generated food
   else:
 
     return status_dict #return the same version of the dictionary
@@ -171,7 +173,6 @@ r=0
 b=20
 g=0
 while True:
-
   #while loop that will run facilitating the main snake game and confirms that there are three apples on the board at all times
   t.update()
   status_dict=update_food(status_dict, turtle_dict)
@@ -202,4 +203,4 @@ while True:
       keys[i].goto(turtle_dict[keys[i-1]])
   
   move(delay, turtle_dict)
-t.mainloop() #keeps window open
+window.mainloop() #keeps window open
