@@ -5,20 +5,20 @@ import turtle as t
 import time
 import random
 
-#initialize window, creates turtle and apple sking
+#initialize window, creates turtle, adds turtle and apple skin
 window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 
-
-t.shape("circle")
-apple_shape='gapple2.gif'
-window.addshape(apple_shape)
-
+#creating a list for the apple, banana, mango, and pepper
+shape_list=['apple.gif', 'banana.gif', 'mango.gif', 'pepper.gif']
+for i in shape_list:
+  window.addshape(i)
 window.colormode(255)
 t.colormode(255)
 window.bgcolor(144,238,144)
 delay=0.15
 
+t.shape("circle")
 
 #defining functions 
 def up():
@@ -106,10 +106,12 @@ def update_food(status_dict, turtle_dict): #student defined function to update t
     for i in range(3):
         food = t.Turtle()
         food.ht()
+        shape=shape_list[random.randint(0, len(shape_list)-1)]
+        
         colors = 'red'
         food.turtlesize(stretch_wid=1.3,
                       stretch_len=1.3)
-        food.shape(apple_shape)
+        food.shape(shape)
         food.color(colors)
         food.speed(1000)
         food.penup()
@@ -159,7 +161,7 @@ for i in range(4):
   t.right(90)
 go_to(0,0)
 t.color("black")
-#.
+
 
 
 
@@ -173,7 +175,7 @@ t.onkey(left, "Left") #call "left" function if left arrow key is pressed
 t.onkey(right, "Right") #call "right" function if right arrow key is pressed
 
 status_dict={}
-
+#ganso tonto = avaneesh ramesh
 turtle_dict={t:(0,0)}
 status_dict=update_food(status_dict, turtle_dict)
 r=0
