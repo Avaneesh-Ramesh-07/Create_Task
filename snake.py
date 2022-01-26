@@ -159,7 +159,7 @@ for i in range(4):
   t.right(90)
 go_to(0,0)
 t.color("black")
-
+#.
 
 
 
