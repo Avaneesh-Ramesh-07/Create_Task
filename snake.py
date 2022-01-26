@@ -5,14 +5,18 @@ import turtle as t
 import time
 import random
 
-#initialize window
+#initialize window, creates turtle and apple sking
 window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
-window.bgcolor("lightgreen")
+
+
 t.shape("circle")
+apple_shape='gapple2.gif'
+window.addshape(apple_shape)
 
 window.colormode(255)
-
+t.colormode(255)
+window.bgcolor(144,238,144)
 delay=0.15
 
 
@@ -103,8 +107,9 @@ def update_food(status_dict, turtle_dict): #student defined function to update t
         food = t.Turtle()
         food.ht()
         colors = 'red'
-        shapes = 'circle'
-        food.shape(shapes)
+        food.turtlesize(stretch_wid=1.3,
+                      stretch_len=1.3)
+        food.shape(apple_shape)
         food.color(colors)
         food.speed(1000)
         food.penup()
@@ -131,7 +136,7 @@ def add_new_turtle(turtle_dict, r, g, b, delay):
   created_turtle.speed(10000)
   created_turtle.penup()
   created_turtle.shape('circle')
-  created_turtle.turtlesize(1.3)
+  #created_turtle.turtlesize(1.3)
   keys=list(turtle_dict.keys())
   created_turtle.goto(turtle_dict[t])
   turtle_dict[created_turtle]=created_turtle.pos()
@@ -140,9 +145,10 @@ def add_new_turtle(turtle_dict, r, g, b, delay):
 #makes a 442x442 grid for the board
 
 t.speed(1000000000)
-t.turtlesize(1.3)
+#t.turtlesize(1.3)
 go_to(-(442/2), -(441/2))
 t.lt(90)
+t.color(45, 166, 78)
 for i in range(4):
   for i in range(17):
       t.forward(26)
@@ -152,6 +158,7 @@ for i in range(4):
       t.left(90)
   t.right(90)
 go_to(0,0)
+t.color("black")
 
 
 
