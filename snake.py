@@ -135,7 +135,7 @@ def add_new_turtle(turtle_dict, r, g, b, delay):
     delay=0
   created_turtle=t.Turtle()
   created_turtle.color(r, g, b)
-  created_turtle.speed(10000)
+  created_turtle.speed(7)
   created_turtle.penup()
   created_turtle.shape('circle')
   #created_turtle.turtlesize(1.3)
@@ -212,4 +212,5 @@ while True:
       keys[i].goto(turtle_dict[keys[i-1]])
   
   move(delay, turtle_dict)
+  time.sleep(0.25)
 window.mainloop() #keeps window open
