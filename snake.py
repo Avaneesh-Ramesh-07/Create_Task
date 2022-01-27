@@ -9,8 +9,8 @@ import random
 window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 
-#creating a list for the apple, banana, mango, and pepper
-shape_list=['apple.gif', 'banana.gif', 'mango.gif', 'pepper.gif']
+#creating a list so that the images for the apple, banana, mango, and pepper load
+shape_list=['apple.gif', 'banana.gif', 'mango.gif', 'pepper.gif', 'cherry.gif', 'orange.gif', 'lemon.gif']
 for i in shape_list:
   window.addshape(i)
 window.colormode(255)
@@ -58,6 +58,7 @@ def game_finished(): #function to execute when the player loses the game
   window.bgcolor("lightgreen")
   t.ht()
   t.pu()
+# Game-Ending text
   t.write("Thanks for playing! :)\nHope you had lots of fun playing our game!\nRerun the program to play again!", font=("Helvetica", 15, "normal") ,align="center")
   time.sleep(7.5)
   exit()
@@ -104,8 +105,7 @@ def update_food(status_dict, turtle_dict): #student defined function to update t
         possible_pos.remove(position)
     status_dict={}
     for i in range(3):
-        food = t.Turtle()
-        food.ht()
+        food = t.Turtle(visible=False)
         shape=shape_list[random.randint(0, len(shape_list)-1)]
         
         colors = 'red'
@@ -133,11 +133,12 @@ def add_new_turtle(turtle_dict, r, g, b, delay):
     delay-=0.01
   else:
     delay=0
-  created_turtle=t.Turtle()
+  created_turtle=t.Turtle(visible=False)
   created_turtle.color(r, g, b)
   created_turtle.speed(7)
   created_turtle.penup()
   created_turtle.shape('circle')
+  created_turtle.st()
   #created_turtle.turtlesize(1.3)
   keys=list(turtle_dict.keys())
   created_turtle.goto(turtle_dict[t])
@@ -212,5 +213,5 @@ while True:
       keys[i].goto(turtle_dict[keys[i-1]])
   
   move(delay, turtle_dict)
-  time.sleep(0.25)
+  time.sleep(0.15)
 window.mainloop() #keeps window open
