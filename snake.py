@@ -6,7 +6,7 @@ import turtle as t
 import time
 import random
 
-#initialize window, creates turtle, adds turtle and apple skin
+#initialize window and creates the turtle 
 window=t.Screen()
 window.title("Snake Game - Avaneesh R. and Anvay T.")
 
@@ -17,6 +17,7 @@ for i in shape_list:
 window.colormode(255)
 t.colormode(255)
 window.bgcolor(144,238,144)
+
 delay=0.15
 
 t.shape("circle")
@@ -56,7 +57,7 @@ def check_loss(x, y, turtle_dict):
     return -1
 
 def game_finished(score):
-  #function to execute when the player loses the game, removes the board and snake, outputs a thanks message. 
+  #function to execute when the player loses the game, clears the screen, outputs a thanks message. 
   t.clearscreen()
   window.bgcolor("lightgreen")
   t.ht()
@@ -150,21 +151,27 @@ def add_new_turtle(turtle_dict, r, g, b, delay):
   return turtle_dict, delay
 
 #creates a 442x442 grid for the snake board
-
-t.speed(1000000000)
+t.ht()
+t.speed(0)
 go_to(-(442/2), -(441/2))
 t.lt(90)
-t.color(45, 166, 78)
+
 for i in range(4):
   for i in range(17):
+      t.color(42, 107, 7)
       t.forward(26)
       t.right(90)
+      t.color(84, 212, 15)
       t.fd(442)
       t.bk(442)
       t.left(90)
   t.right(90)
+t.color(42, 107, 7)
+t.seth(90)
+t.fd(442)
 go_to(0,0)
 t.color("black")
+t.st()
 
 #event listeners
 t.listen()
@@ -220,5 +227,5 @@ while True:
       turtle_objects[i].goto(turtle_dict[turtle_objects[i-1]])
   
   move(delay, turtle_dict) #moves head
-  time.sleep(0.12) #adds small delay to make everything smoother
-window.mainloop() #keeps window open
+  time.sleep(0.12) #adds small delay to make everything smoother while moving the turtle
+window.mainloop() #keeps turtle window open
