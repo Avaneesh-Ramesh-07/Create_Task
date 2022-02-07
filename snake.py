@@ -1,4 +1,4 @@
-"""This is the code for Avaneesh R. and Anvay T.'s Create Task. We have created the Snake Game"""
+"""This is the code for the Create Task. We have created the Snake Game"""
 
 
 #importing packages
@@ -8,7 +8,7 @@ import random
 
 #initialize window and creates the turtle 
 window=t.Screen()
-window.title("Snake Game - Avaneesh R. and Anvay T.")
+window.title("Snake Game")
 
 #creating a list so that the gifs for the apple, banana, mango, pepper, cherry, orange, and lemon load
 shape_list=['apple.gif', 'banana.gif', 'mango.gif', 'pepper.gif', 'cherry.gif', 'orange.gif', 'lemon.gif']
