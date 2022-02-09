@@ -11,13 +11,15 @@ window=t.Screen()
 window.title("Snake Game")
 
 #creating a list so that the gifs for the apple, banana, mango, pepper, cherry, orange, and lemon load
-shape_list=['apple.gif', 'banana.gif', 'mango.gif', 'pepper.gif', 'cherry.gif', 'orange.gif', 'lemon.gif']
+
+shape_list=['apple.gif','banana.gif', 'mango.gif', 'pepper.gif', 'cherry.gif', 'orange.gif', 'lemon.gif']
 for i in shape_list:
   window.addshape(i)
 window.colormode(255)
 t.colormode(255)
 window.bgcolor(144,238,144)
 
+#delay
 delay=0.15
 
 t.shape("circle")
@@ -134,7 +136,7 @@ def update_food(status_dict, turtle_dict):
     return status_dict #return the same version of the dictionary
 
 def add_new_turtle(turtle_dict, r, g, b, delay):
-  #creates additional turtles stemming from the apples
+  #creates additional turtles after they eat the apples
   if delay-0.01>0:
     delay-=0.01
   else:
@@ -229,3 +231,21 @@ while True:
   move(delay, turtle_dict) #moves head
   time.sleep(0.12) #adds small delay to make everything smoother while moving the turtle
 window.mainloop() #keeps turtle window open
+
+
+# IMAGE CITATIONS WITH SHORTENED LINKS
+
+#Citation for banana image: https://tinyurl.com/ue8d3j
+
+#Citation for mango image: https://tinyurl.com/jei27j
+
+#Citation for apple image: https://tinyurl.com/h29f2h
+
+#Citation for pepper image: https://tinyurl.com/1h7v98j
+
+#Citation for cherry image: https://tinyurl.com/aow2j0
+
+#Citation for lemon image: https://tinyurl.com/2983jf
+
+#Citation for orangeimage: https://tinyurl.com/4j298j
+
